@@ -1,1 +1,94 @@
-{"updated":null,"episodes":[]}
+{
+ "updated": null,
+ "cached": true,
+ "episodes": [
+  {
+   "id": "58",
+   "num": 58,
+   "title": "Emotional Infidelity: When the Heart Wanders Before the Body Does",
+   "tag": "ATTACHMENT",
+   "date": "2026-10-02T06:00:00Z",
+   "desc": "We dissect the subtle signs, the neuroscience behind emotional affairs, and how to rebuild trust when intimacy leaks outside the relationship.",
+   "audio": "",
+   "dur": "",
+   "link": ""
+  },
+  {
+   "id": "57",
+   "num": 57,
+   "title": "The Trust Paradox: Why We Sabotage What We Want Most",
+   "tag": "BIOLOGY",
+   "date": "2026-09-25T06:00:00Z",
+   "desc": "Trust isn't just a feeling, it's a biological contract. Kehinde explores oxytocin, betrayal trauma, and rewiring.",
+   "audio": "",
+   "dur": "",
+   "link": ""
+  },
+  {
+   "id": "56",
+   "num": 56,
+   "title": "The Comparison Trap: Social Media, Self-Worth & Relationships",
+   "tag": "CONFLICT",
+   "date": "2026-09-18T06:00:00Z",
+   "desc": "How curated lives distort real love. We unpack comparison theory, jealousy, and building intrinsic validation.",
+   "audio": "",
+   "dur": "",
+   "link": ""
+  },
+  {
+   "id": "55",
+   "num": 55,
+   "title": "The Resentment Trap: Unspoken Contracts That Kill Intimacy",
+   "tag": "INTIMACY",
+   "date": "2026-09-11T06:00:00Z",
+   "desc": "Every resentment started as an unspoken expectation. Learn to name, negotiate, and neutralize silent deals.",
+   "audio": "",
+   "dur": "",
+   "link": ""
+  },
+  {
+   "id": "54",
+   "num": 54,
+   "title": "Relationship Autopsy: What Your Last Breakup Was Trying to Teach You",
+   "tag": "BOUNDARIES",
+   "date": "2026-09-04T06:00:00Z",
+   "desc": "Breakups are data. We perform a post-mortem to extract patterns, attachment wounds, and growth levers.",
+   "audio": "",
+   "dur": "",
+   "link": ""
+  },
+  {
+   "id": "53",
+   "num": 53,
+   "title": "Breadcrumbing: The Science of Intermittent Reinforcement in Dating",
+   "tag": "DESIRE",
+   "date": "2026-08-28T06:00:00Z",
+   "desc": "Why tiny crumbs feel like a feast. Dopamine, variable rewards, and how to break the loop for good.",
+   "audio": "",
+   "dur": "",
+   "link": ""
+  },
+  {
+   "id": "52",
+   "num": 52,
+   "title": "Standards vs Ego: Knowing the Difference in Love",
+   "tag": "PHILOSOPHY",
+   "date": "2026-08-21T06:00:00Z",
+   "desc": "High standards protect love. Ego protects fear. Learn to tell them apart before you block your own blessing.",
+   "audio": "",
+   "dur": "",
+   "link": ""
+  },
+  {
+   "id": "51",
+   "num": 51,
+   "title": "Emotional Availability: Are You Really Ready?",
+   "tag": "PSYCHOLOGY",
+   "date": "2026-08-14T06:00:00Z",
+   "desc": "Availability isn't about time, it's about capacity. Attachment, nervous system regulation, and readiness.",
+   "audio": "",
+   "dur": "",
+   "link": ""
+  }
+ ]
+}

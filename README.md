@@ -8,10 +8,10 @@ Static site, no build step, no dependencies. Open `index.html` or serve the fold
 index.html          page markup (Klaviyo scripts + form container live here)
 styles.css          design tokens and styles
 app.js              feed ingestion, players, countdown, explorer, motion
-episodes.json       snapshot of the RSS feed (refreshed by the GitHub Action)
+episodes.json       snapshot of the RSS feed (seeded with cached highlights, then refreshed by the GitHub Action)
 scripts/fetch-feed.mjs   builds episodes.json from the RSS feed
 .github/workflows/update-episodes.yml   runs Fridays 06:00 GMT (+ retries) and on demand
-assets/             logo, self-hosted fonts (Newsreader, Geist) and Phosphor icons
+assets/             logo, self-hosted fonts (Instrument Serif, Inter) and Phosphor icons
 ```
 
 ## How new episodes appear

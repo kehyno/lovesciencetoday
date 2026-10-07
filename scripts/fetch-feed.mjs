@@ -21,6 +21,12 @@ const fmtDur = d => {
   return d.replace(/^0:(\d+:\d+)$/, '$1');
 };
 
+const tagFor = t => {
+  if (t.includes(':')) return t.split(':')[0].slice(0, 18).toUpperCase();
+  const m = t.match(/^(Attachment|Biology|Conflict|Intimacy|Boundaries|Desire|Trust|Psychology)/i);
+  return m ? m[1].toUpperCase() : 'LOVE SCIENCE';
+};
+
 const channelHead = xml.split(/<item[\s>]/i)[0];
 const chanImg = attr(channelHead, 'itunes:image', 'href') || pick(pick(channelHead, 'image'), 'url');
 const items = [...xml.matchAll(/<item[\s>][\s\S]*?<\/item>/gi)].map(m => m[0]);
@@ -40,7 +46,7 @@ let episodes = items.map((it, i) => {
     num: +pick(it, 'itunes:episode') || 0,
   };
 }).sort((a, b) => new Date(b.date) - new Date(a.date));
-episodes.forEach((e, i) => { if (!e.num) e.num = episodes.length - i; });
+episodes.forEach((e, i) => { e.num = episodes.length - i; e.tag = tagFor(e.title); });
 
-await writeFile(new URL('../episodes.json', import.meta.url), JSON.stringify({ updated: new Date().toISOString(), episodes }, null, 1) + '\n');
+await writeFile(new URL('../episodes.json', import.meta.url), JSON.stringify({ updated: new Date().toISOString(), cached: false, episodes }, null, 1) + '\n');
 console.log(`Wrote ${episodes.length} episodes. Latest: ${episodes[0].title}`);

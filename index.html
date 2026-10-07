@@ -3,21 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Love Science Today | The relationships podcast</title>
+<title>Love Science Today | The science of love, every Friday</title>
 <meta name="description" content="Love Science Today is a modern relationships podcast hosted by Kehinde Ojo. Psychology, sociology, philosophy, biology and attachment theory meet real conversations about love. New episode every Friday 06:00 AM GMT.">
-<meta name="theme-color" content="#05070c">
-<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0A1220">
 <link rel="canonical" href="https://lovesciencetoday.com/">
 <link rel="icon" href="assets/logo.jpg">
 <link rel="alternate" type="application/rss+xml" title="Love Science Today" href="https://anchor.fm/s/10b672468/podcast/rss">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Love Science Today">
-<meta property="og:description" content="The science of why we love. New episode every Friday 06:00 AM GMT, hosted by Kehinde Ojo.">
+<meta property="og:description" content="Love isn't random. It's research. New episode every Friday 06:00 AM GMT, hosted by Kehinde Ojo.">
 <meta property="og:image" content="assets/logo.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="preload" href="assets/fonts/newsreader-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/geist-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/instrument-serif-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/inter-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/logo.jpg" as="image">
 <link rel="stylesheet" href="assets/fonts/fonts.css">
 <link rel="stylesheet" href="assets/phosphor/regular/style.css">
@@ -37,23 +36,24 @@
 <a class="skip" href="#main">Skip to content</a>
 <div class="progress" aria-hidden="true"></div>
 
-<!-- NAV -->
-<header class="nav" id="nav">
-  <div class="nav__in">
+<!-- HEADER -->
+<header class="top">
+  <div class="top__in">
     <a class="brand" href="#top" aria-label="Love Science Today, home">
-      <i class="ph-fill ph-heart brand__icon" aria-hidden="true"></i>
-      <span>Love Science Today</span>
+      <span class="brand__mark"><img src="assets/logo.jpg" width="44" height="44" alt=""></span>
+      <span class="brand__txt"><span class="brand__name">Love Science Today</span><span class="brand__by">With Kehinde Ojo</span></span>
     </a>
-    <nav class="nav__links" id="navLinks" aria-label="Primary">
-      <a href="#explore">Explore</a>
-      <a href="#episodes">Episodes</a>
-      <a href="#listen">Platforms</a>
-      <a href="#host">Host</a>
-      <a href="#contact">Contact</a>
+    <nav class="top__nav" id="topNav" aria-label="Primary">
+      <a href="#episodes">EPISODES</a>
+      <a href="#forces">FORCES</a>
+      <a href="#listen">LISTEN</a>
+      <a href="#hosting">HOST</a>
+      <a href="#contact">CONTACT</a>
     </nav>
-    <div class="nav__end">
-      <a class="btn btn--primary btn--sm" href="#subscribe" data-magnetic>Subscribe</a>
-      <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks"><i class="ph ph-list"></i></button>
+    <div class="top__end">
+      <a class="round" href="mailto:lovesciencetoday@gmail.com" aria-label="Email lovesciencetoday@gmail.com" title="Email us" data-magnetic><i class="ph ph-envelope-simple"></i></a>
+      <a class="spot" href="https://open.spotify.com/show/12EsYsM88j7oHkNBtGOu9C?si=58caf10b1a8b446e" target="_blank" rel="noopener" data-magnetic><i class="dot dot--green" aria-hidden="true"></i>SPOTIFY</a>
+      <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="topNav"><i class="ph ph-list"></i></button>
     </div>
   </div>
 </header>
@@ -61,252 +61,233 @@
 <main id="main">
 
 <!-- HERO -->
-<section class="hero" id="top">
-  <canvas class="hero__net" id="net" aria-hidden="true"></canvas>
-  <div class="hero__glow" aria-hidden="true"></div>
-
+<section class="hero grain" id="top">
+  <div class="hero__bg" aria-hidden="true"></div>
   <div class="wrap hero__grid">
     <div class="hero__copy">
-      <p class="badge" data-rise>
-        <span class="badge__live"><i class="pulse" aria-hidden="true"></i>LIVE</span>
-        <span id="badgeCount">58 EPISODES</span>
-        <span>NEW EVERY FRIDAY 06:00 AM GMT</span>
-        <span>HOSTED BY KEHINDE OJO</span>
-      </p>
-      <h1 class="hero__title" aria-label="The science of why we love.">
-        <span class="line"><span class="word" style="--i:0">The</span> <span class="word" style="--i:1">science</span></span>
-        <span class="line"><span class="word" style="--i:2">of</span> <span class="word word--em" style="--i:3">why</span> <span class="word" style="--i:4">we</span> <span class="word" style="--i:5">love.</span></span>
+      <p class="badge" data-rise><i class="dot dot--gold pulse" aria-hidden="true"></i><span>LIVE &bull; <span id="badgeCount">58 EPISODES</span> &bull; NEW EVERY FRIDAY 06:00 AM GMT &bull; HOSTED BY KEHINDE OJO</span></p>
+      <h1 class="hero__title">
+        <span class="hl"><span class="hw" style="--i:0">Love</span> <span class="hw" style="--i:1">isn't</span></span>
+        <span class="hl"><span class="hw hw--em" style="--i:2">random.</span></span>
+        <span class="hl"><span class="hw" style="--i:3">It's</span> <span class="hw" style="--i:4">research.</span></span>
       </h1>
-      <p class="hero__sub" data-rise style="--d:.55s">Psychology, attachment theory and biology meet real conversations about attraction, heartbreak, boundaries and intimacy in the digital age.</p>
-      <div class="hero__cta" data-rise style="--d:.7s">
-        <a class="btn btn--primary" href="https://open.spotify.com/show/12EsYsM88j7oHkNBtGOu9C?si=58caf10b1a8b446e" target="_blank" rel="noopener" data-magnetic><i class="ph-fill ph-spotify-logo" aria-hidden="true"></i>Listen on Spotify</a>
-        <a class="btn btn--ghost" href="#episodes" data-magnetic>Browse episodes</a>
-      </div>
-    </div>
+      <p class="hero__sub" data-rise style="--d:.55s">Weekly deep dives into the science of attachment, conflict, desire and repair. No fluff, just peer-reviewed truth for real relationships. Fridays 06:00 AM GMT, sharp.</p>
 
-    <div class="hero__visual" data-rise style="--d:.3s">
-      <div class="heart" id="heart">
-        <img src="assets/logo.jpg" width="1024" height="1024" alt="Love Science Today logo: a glass heart filled with a glowing network of connected points" fetchpriority="high">
-      </div>
+      <ul class="pills" id="pills" data-rise style="--d:.7s" aria-label="Listen on"></ul>
 
       <!-- Hero player -->
-      <article class="hplayer" id="heroPlayer" aria-label="Latest episode player" aria-live="polite">
-        <div class="hplayer__top">
-          <span class="hplayer__tag">LATEST DROP</span>
-          <span class="hplayer__when">Fridays 06:00 AM GMT</span>
+      <article class="player" id="hero-player" data-rise style="--d:.85s" aria-label="Latest episode player">
+        <div class="player__top">
+          <span class="chip chip--ink">LATEST DROP &bull; Fridays 06:00 AM GMT</span>
+          <span class="live">&#9679; LIVE</span>
+          <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>
         </div>
-        <div class="hplayer__body">
-          <div class="skel skel--cover"></div>
-          <div class="hplayer__text">
-            <div class="skel skel--line"></div>
-            <div class="skel skel--line skel--short"></div>
+        <div class="player__row">
+          <button class="play" id="heroPlay" type="button" aria-label="Play latest episode"><i class="ph-fill ph-play"></i></button>
+          <div class="player__meta">
+            <p class="player__title" id="heroTitle">Loading latest drop...</p>
+            <p class="player__sub" id="heroSub">Love Science Today &bull; Kehinde Ojo</p>
           </div>
         </div>
+        <div class="scrub" id="scrubWrap">
+          <span id="tCur">0:00</span>
+          <input type="range" id="scrub" min="0" max="1000" value="0" aria-label="Seek" disabled>
+          <span id="tDur">0:00</span>
+        </div>
+        <p class="player__note" id="heroNote">Last checked: --:-- &bull; Auto-updates Fridays 06:00 AM GMT</p>
       </article>
     </div>
-  </div>
-</section>
 
-<!-- NEXT DROP -->
-<section class="drop" id="drop" aria-label="Next episode countdown">
-  <div class="wrap drop__in">
-    <div class="drop__label">
-      <h2 class="drop__title">Next episode lands in</h2>
-      <p class="drop__note">Every Friday at 06:00 AM GMT</p>
-    </div>
-    <div class="clock" id="clock" role="timer" aria-live="off">
-      <div class="clock__u"><b id="cD">00</b><span>days</span></div>
-      <div class="clock__u"><b id="cH">00</b><span>hours</span></div>
-      <div class="clock__u"><b id="cM">00</b><span>mins</span></div>
-      <div class="clock__u"><b id="cS">00</b><span>secs</span></div>
-    </div>
-    <div class="drop__actions">
-      <button class="btn btn--ghost btn--sm" id="icsBtn" type="button"><i class="ph ph-calendar-plus" aria-hidden="true"></i>Add to calendar</button>
-      <button class="btn btn--ghost btn--sm" id="rssBtn" type="button"><i class="ph ph-rss" aria-hidden="true"></i><span>Copy RSS feed</span></button>
-    </div>
-  </div>
-</section>
-
-<!-- EXPLORE -->
-<section class="explore" id="explore">
-  <div class="wrap">
-    <h2 class="h2">Seven questions we keep asking, through six lenses.</h2>
-
-    <div class="explore__grid">
-      <ul class="topics" id="topics" role="tablist" aria-label="Topics" aria-orientation="vertical"></ul>
-
-      <div class="lens" id="lens" aria-live="polite">
-        <svg class="lens__svg" id="lensSvg" viewBox="-60 0 520 400" role="img" aria-label="Network of the six disciplines the show draws on"></svg>
-        <div class="lens__text">
-          <h3 class="lens__q" id="lensQ"></h3>
-          <p class="lens__p" id="lensP"></p>
-          <ul class="lens__chips" id="lensChips"></ul>
-          <button class="btn btn--ghost btn--sm" id="lensGo" type="button">Find these episodes<i class="ph ph-arrow-down" aria-hidden="true"></i></button>
-        </div>
+    <div class="hero__art" data-rise style="--d:.3s">
+      <div class="orb" id="orb">
+        <span class="orb__ring orb__ring--1" aria-hidden="true"></span>
+        <span class="orb__ring orb__ring--2" aria-hidden="true"></span>
+        <span class="orb__glow" aria-hidden="true"></span>
+        <div class="orb__disc"><img src="assets/logo.jpg" width="1024" height="1024" alt="Love Science Today logo: a glass heart filled with a glowing network of connected points" fetchpriority="high"></div>
+        <span class="orb__tag">FRIDAY 06:00 AM GMT &bull; NEW SCIENCE WEEKLY</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- EPISODES -->
-<section class="eps" id="episodes">
-  <div class="wrap">
-    <div class="eps__head">
-      <h2 class="h2">Fresh from the feed.</h2>
-      <div class="rail__ctl" aria-label="Scroll episodes">
-        <button class="ic" id="railPrev" type="button" aria-label="Previous episodes"><i class="ph ph-arrow-left"></i></button>
-        <button class="ic" id="railNext" type="button" aria-label="Next episodes"><i class="ph ph-arrow-right"></i></button>
-      </div>
-    </div>
-  </div>
-  <div class="rail" id="rail" tabindex="0" aria-label="Latest episodes"></div>
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true"><div class="marquee__track" id="marquee"></div></div>
 
-  <div class="wrap">
-    <div class="archive" id="archive" data-open="false">
-      <button class="btn btn--ghost" id="archiveToggle" type="button" aria-expanded="false" aria-controls="archiveBody">
-        <i class="ph ph-list-magnifying-glass" aria-hidden="true"></i><span id="archiveLabel">Browse all 58 episodes</span>
-      </button>
-      <div class="archive__body" id="archiveBody">
-        <div class="archive__inner">
-          <div class="field">
-            <label for="q">Search episodes</label>
-            <div class="field__box">
-              <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
-              <input id="q" type="search" autocomplete="off" placeholder="Try attachment, situationship, boundaries">
-            </div>
-          </div>
-          <ol class="list" id="list"></ol>
-          <p class="empty" id="listEmpty" hidden>No episodes match that search. Try a broader word.</p>
-          <button class="btn btn--ghost btn--sm" id="more" type="button" hidden>Show more</button>
-        </div>
-      </div>
+<!-- EPISODE LAB -->
+<section class="eps wrap" id="episodes">
+  <div class="eps__head reveal">
+    <div>
+      <p class="eyebrow"><i></i>EPISODE LAB, LIVE RSS</p>
+      <h2 class="h2"><span id="epsCount">58</span> studies.<br>Zero sugar-coating.</h2>
+    </div>
+    <div class="eps__note">
+      <p>Pulling live from <code>anchor.fm/s/10b672468/podcast/rss</code>. New episode auto-surfaces here every Friday 06:00 AM GMT.</p>
+      <p class="eps__warn" id="epsWarn" hidden>Live feed reconnecting, showing cached highlights.</p>
     </div>
   </div>
+
+  <div class="tools reveal">
+    <div class="search">
+      <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
+      <label class="sr" for="q">Search episodes</label>
+      <input id="q" type="search" autocomplete="off" placeholder="Search episodes: attachment, trust, breakups">
+      <button class="search__x" id="qClear" type="button" aria-label="Clear search" hidden><i class="ph ph-x"></i></button>
+    </div>
+    <p class="tools__count" id="resultCount" aria-live="polite"></p>
+  </div>
+
+  <div class="grid" id="grid" aria-live="polite"></div>
+  <p class="empty" id="empty" hidden>No episodes match that search. Try a broader word.</p>
+  <div class="more"><button class="btn btn--ink" id="more" type="button" hidden>SHOW MORE EPISODES</button></div>
 </section>
 
-<!-- MANIFESTO -->
-<section class="manifesto" id="about" aria-label="About the show">
+<!-- FORCES -->
+<section class="forces grain" id="forces">
   <div class="wrap">
-    <p class="manifesto__p" id="manifesto">Love is not only a feeling. It is chemistry, history, culture and choice. We follow the research and the real world to explain why people fall for who they fall for, why situationships feel comfortable but empty, and what healthy love asks of us when there are endless options.</p>
+    <ul class="forces__chips reveal" id="chips" aria-label="Filter episodes by discipline">
+      <li><button type="button" data-k="psycholog">PSYCHOLOGY</button></li>
+      <li><button type="button" data-k="social">SOCIOLOGY</button></li>
+      <li><button type="button" data-k="philosoph">PHILOSOPHY</button></li>
+      <li><button type="button" data-k="biolog">BIOLOGY</button></li>
+      <li><button type="button" data-k="attach">ATTACHMENT</button></li>
+      <li><button type="button" data-k="family">FAMILY SYSTEMS</button></li>
+    </ul>
+    <div class="forces__txt reveal">
+      <h2 class="h2 h2--mid">Love is a system, not a feeling.</h2>
+      <p>Each episode maps one force driving modern love, so you can stop guessing and start designing. Fridays 06:00 AM GMT.</p>
+    </div>
   </div>
 </section>
 
 <!-- LISTEN -->
-<section class="listen" id="listen">
-  <div class="wrap">
-    <h2 class="h2">Listen wherever you already do.</h2>
-    <div class="tiles" id="tiles">
-      <a class="tile tile--hero" href="https://open.spotify.com/show/12EsYsM88j7oHkNBtGOu9C?si=58caf10b1a8b446e" target="_blank" rel="noopener" data-brand="spotify">
-        <img class="tile__ic" src="https://cdn.simpleicons.org/spotify/ffb454" alt="" width="44" height="44" loading="lazy">
-        <span class="tile__name">Spotify</span>
-        <span class="tile__sub">The home of the show</span>
-        <i class="ph ph-arrow-up-right tile__go" aria-hidden="true"></i>
-      </a>
-      <a class="tile" href="https://podcasts.apple.com/au/podcast/love-science-today/id1850332844" target="_blank" rel="noopener">
-        <img class="tile__ic" src="https://cdn.simpleicons.org/applepodcasts/ffb454" alt="" width="32" height="32" loading="lazy">
-        <span class="tile__name">Apple Podcasts</span>
-        <i class="ph ph-arrow-up-right tile__go" aria-hidden="true"></i>
-      </a>
-      <a class="tile" href="https://www.youtube.com/show/VLPLjSPzidxuZJ5pdgpQfMbTQtJhd4QCz7YP?season=AllEpisodes&amp;sbp=CgtBbGxFcGlzb2RlcxoAKgtiWnllX19NY3lzNEAB" target="_blank" rel="noopener">
-        <img class="tile__ic" src="https://cdn.simpleicons.org/youtube/ffb454" alt="" width="32" height="32" loading="lazy">
-        <span class="tile__name">YouTube</span>
-        <i class="ph ph-arrow-up-right tile__go" aria-hidden="true"></i>
-      </a>
-      <a class="tile" href="https://music.amazon.co.uk/podcasts/21e9842b-cd75-4316-9236-add63172d5fe/love-science-today" target="_blank" rel="noopener">
-        <img class="tile__ic" src="https://cdn.simpleicons.org/amazonmusic/ffb454" alt="" width="32" height="32" loading="lazy">
-        <span class="tile__name">Amazon Music</span>
-        <i class="ph ph-arrow-up-right tile__go" aria-hidden="true"></i>
-      </a>
-      <a class="tile" href="https://goodpods.com/podcasts/love-science-today-713286" target="_blank" rel="noopener">
-        <span class="tile__ic tile__ic--mono" aria-hidden="true">G</span>
-        <span class="tile__name">Goodpods</span>
-        <i class="ph ph-arrow-up-right tile__go" aria-hidden="true"></i>
-      </a>
-      <a class="tile tile--sm" href="https://podlinkr.com/en/love-science-today" target="_blank" rel="noopener">
-        <span class="tile__name">Podlinkr</span>
-        <i class="ph ph-arrow-up-right tile__go" aria-hidden="true"></i>
-      </a>
-      <a class="tile tile--sm" href="https://replaio.com/podcasts/love-science-today-CVIDKh" target="_blank" rel="noopener">
-        <span class="tile__name">Replaio</span>
-        <i class="ph ph-arrow-up-right tile__go" aria-hidden="true"></i>
-      </a>
-      <a class="tile tile--sm" href="https://podcastaddict.com/podcast/love-science-today/7291960" target="_blank" rel="noopener">
-        <span class="tile__name">Podcast Addict</span>
-        <i class="ph ph-arrow-up-right tile__go" aria-hidden="true"></i>
-      </a>
-      <a class="tile tile--sm" href="https://castbox.fm/vh/6877362" target="_blank" rel="noopener">
-        <span class="tile__name">Castbox</span>
-        <i class="ph ph-arrow-up-right tile__go" aria-hidden="true"></i>
-      </a>
+<section class="listen wrap" id="listen">
+  <div class="reveal">
+    <p class="eyebrow eyebrow--plain">LISTEN EVERYWHERE &bull; 10 PLATFORMS</p>
+    <h2 class="h2">Your app. Your rules.</h2>
+    <p class="lede">All 10 major platforms, one link each. No middlemen. Tap, subscribe, auto-get Friday 06:00 AM GMT drops.</p>
+  </div>
+  <div class="plat" id="plat"></div>
+  <div class="android reveal">
+    <div>
+      <p class="eyebrow eyebrow--gold">MORE WAYS TO LISTEN: ANDROID FOCUS</p>
+      <h3 class="h3">Replaio &bull; Podcast Addict &bull; Podcast Republic</h3>
+      <p>Built for Android power-listeners. Offline, variable speed, and auto-download for Friday 06:00 AM GMT.</p>
     </div>
+    <div class="android__btns" id="androidBtns"></div>
   </div>
 </section>
 
-<!-- HOST -->
-<section class="host" id="host">
-  <div class="wrap host__grid">
-    <h2 class="host__name"><span>Kehinde</span><span>Ojo</span></h2>
-    <div class="host__copy">
-      <p>Hosted by Kehinde Ojo. Every episode starts with one honest question about love and follows the evidence wherever it leads: research, cultural observation and conversations that matter. No scripts for how you should feel, just better language for what you already do.</p>
+<!-- HOST + RSS -->
+<section class="host" id="hosting">
+  <div class="wrap host__grid reveal">
+    <div>
+      <p class="eyebrow eyebrow--plain">NEVER MISS A FRIDAY</p>
+      <h2 class="h2 h2--sm">Follow once. Get every drop.</h2>
+      <div class="how">
+        <p class="how__t">HOW IT WORKS:</p>
+        <ol>
+          <li>Pick your podcast app above and hit follow or subscribe.</li>
+          <li>A new episode lands every Friday at 06:00 AM GMT.</li>
+          <li>Prefer a different app? Paste the RSS feed into any podcast player.</li>
+          <li>Want the research behind each episode? Join the list at the bottom of the page.</li>
+        </ol>
+        <dl class="facts">
+          <div><dt>Cost:</dt><dd>Free</dd></div>
+          <div><dt>Format:</dt><dd>Audio podcast</dd></div>
+          <div><dt>Schedule:</dt><dd>Friday 06:00 AM GMT</dd></div>
+          <div><dt>Host:</dt><dd>Kehinde Ojo</dd></div>
+        </dl>
+      </div>
     </div>
+
+    <aside class="card-host">
+      <div class="card-host__top">
+        <span class="card-host__logo"><img src="assets/logo.jpg" width="40" height="40" alt=""></span>
+        <span class="card-host__name">Love Science Today</span>
+        <span class="chip chip--gold">FRIDAY 06:00 AM GMT</span>
+      </div>
+      <p class="card-host__p">Hosted by Kehinde Ojo. Every episode is built from research and real conversation, not hot takes.</p>
+      <div class="rss">
+        <p class="rss__t">RSS &bull; LIVE:</p>
+        <p class="rss__u">https://anchor.fm/s/10b672468/podcast/rss</p>
+        <div class="rss__b">
+          <a href="https://anchor.fm/s/10b672468/podcast/rss" target="_blank" rel="noopener">Open RSS <i class="ph ph-arrow-up-right"></i></a>
+          <button type="button" id="rssCopy"><i class="ph ph-copy"></i><span>Copy feed</span></button>
+          <button type="button" id="icsBtn"><i class="ph ph-calendar-plus"></i><span>Add Fridays to calendar</span></button>
+        </div>
+      </div>
+      <p class="card-host__fine">&copy; <span id="yr">2026</span> Love Science Today. Science-backed love, weekly.</p>
+    </aside>
   </div>
 </section>
 
-<!-- SUBSCRIBE -->
-<section class="sub" id="subscribe">
-  <div class="wrap sub__grid">
-    <div class="sub__copy">
-      <h2 class="h2">Get every Friday in your inbox.</h2>
-      <p>One short email when a new episode drops, plus the research behind it.</p>
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="wrap contact__grid reveal">
+    <div>
+      <p class="eyebrow"><i></i>CONTACT</p>
+      <h2 class="h2 h2--sm">For collaborations,<br>press, or listener<br><em>stories: email us</em></h2>
+      <p class="contact__p">We read every email. Pitch a topic, share your story, or book Kehinde for press. Fridays 06:00 AM GMT is our ritual, your inbox is welcome anytime.</p>
     </div>
-    <div class="sub__form">
-      <div class="klaviyo-form-XvXEqL"></div>
-      <p class="sub__fallback" id="subFallback" hidden>The sign-up form did not load. Email <a href="mailto:mail@lovesciencetoday.com?subject=Subscribe%20me">mail@lovesciencetoday.com</a> and we will add you.</p>
+    <div class="contact__cards">
+      <div class="mailcard mailcard--dark">
+        <div>
+          <p class="mailcard__k">PRIMARY &bull; RECOMMENDED</p>
+          <a class="mailcard__a" href="mailto:lovesciencetoday@gmail.com">lovesciencetoday@gmail.com</a>
+          <p class="mailcard__d">Best for collaborations, press, listener stories</p>
+        </div>
+        <div class="mailcard__btns">
+          <button class="round round--glass" type="button" data-copy="lovesciencetoday@gmail.com" aria-label="Copy primary email"><i class="ph ph-copy"></i></button>
+          <a class="round round--light" href="mailto:lovesciencetoday@gmail.com" aria-label="Email primary address"><i class="ph ph-envelope-simple"></i></a>
+        </div>
+      </div>
+      <div class="mailcard mailcard--light">
+        <div>
+          <p class="mailcard__k">ALTERNATIVE &bull; BACKUP</p>
+          <a class="mailcard__a" href="mailto:mail@lovesciencetoday.com">mail@lovesciencetoday.com</a>
+          <p class="mailcard__d">Use if the first bounces or for general inquiries</p>
+        </div>
+        <div class="mailcard__btns">
+          <button class="round round--soft" type="button" data-copy="mail@lovesciencetoday.com" aria-label="Copy alternative email"><i class="ph ph-copy"></i></button>
+          <a class="round round--ink" href="mailto:mail@lovesciencetoday.com" aria-label="Email alternative address"><i class="ph ph-envelope-simple"></i></a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 </main>
 
-<!-- FOOTER -->
-<footer class="foot" id="contact">
+<!-- FOOTER / NEWSLETTER -->
+<footer class="foot grain" id="subscribe">
+  <div class="foot__bg" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="foot__top">
-      <div class="foot__contact">
-        <h2 class="h2 h2--sm">Say hello.</h2>
-        <p><a class="mail" href="mailto:mail@lovesciencetoday.com">mail@lovesciencetoday.com</a></p>
-        <p><a class="mail mail--alt" href="mailto:lovesciencetoday@gmail.com">lovesciencetoday@gmail.com</a></p>
+    <div class="glass reveal">
+      <div class="glass__grid">
+        <div>
+          <p class="chip chip--gold chip--dot"><i class="dot dot--ink pulse" aria-hidden="true"></i>FRIDAY 06:00 AM GMT &bull; RESEARCH NOTES</p>
+          <h2 class="h2 h2--foot">Get the science before the episode.</h2>
+          <p class="glass__p">Friday 06:00 AM GMT episodes + 1 research note, 1 attachment tool, zero fluff.</p>
+          <p class="glass__p glass__p--strong">No spam. Unsubscribe anytime.</p>
+        </div>
+        <div class="glass__form">
+          <div class="klaviyo-form-XvXEqL"></div>
+          <p class="glass__fallback" id="subFallback" hidden>The sign-up form did not load. Email <a href="mailto:mail@lovesciencetoday.com?subject=Subscribe%20me">mail@lovesciencetoday.com</a> and we will add you.</p>
+        </div>
       </div>
-      <nav class="foot__nav" aria-label="Footer">
-        <a href="https://open.spotify.com/show/12EsYsM88j7oHkNBtGOu9C?si=58caf10b1a8b446e" target="_blank" rel="noopener">Spotify</a>
-        <a href="https://podcasts.apple.com/au/podcast/love-science-today/id1850332844" target="_blank" rel="noopener">Apple Podcasts</a>
-        <a href="https://music.amazon.co.uk/podcasts/21e9842b-cd75-4316-9236-add63172d5fe/love-science-today" target="_blank" rel="noopener">Amazon Music</a>
-        <a href="https://www.youtube.com/show/VLPLjSPzidxuZJ5pdgpQfMbTQtJhd4QCz7YP?season=AllEpisodes&amp;sbp=CgtBbGxFcGlzb2RlcxoAKgtiWnllX19NY3lzNEAB" target="_blank" rel="noopener">YouTube</a>
-        <a href="https://anchor.fm/s/10b672468/podcast/rss" target="_blank" rel="noopener">RSS</a>
-      </nav>
     </div>
-    <div class="foot__bar">
-      <p class="live" id="liveStatus"><i class="pulse pulse--sm" aria-hidden="true"></i><span id="liveText">Checking the feed</span></p>
-      <p class="copy">&copy; <span id="yr">2026</span> Love Science Today. All rights reserved.</p>
-    </div>
+    <p class="foot__status" id="liveStatus"><i class="dot dot--green pulse" aria-hidden="true"></i><span id="liveText">Last checked: --:-- &bull; Auto-updates Fridays 06:00 AM GMT</span></p>
   </div>
 </footer>
 
-<!-- Sticky player -->
-<div class="dock" id="dock" hidden>
-  <img class="dock__cover" id="dockCover" src="assets/logo.jpg" alt="" width="48" height="48">
-  <div class="dock__meta">
-    <p class="dock__title" id="dockTitle">Episode</p>
-    <p class="dock__sub" id="dockSub">Love Science Today</p>
-  </div>
-  <button class="ic ic--play" id="dockPlay" type="button" aria-label="Play"><i class="ph-fill ph-play"></i></button>
-  <div class="dock__scrub">
-    <span class="dock__t" id="dockCur">0:00</span>
-    <input type="range" id="dockSeek" min="0" max="1000" value="0" aria-label="Seek">
-    <span class="dock__t" id="dockDur">0:00</span>
-  </div>
-  <button class="ic" id="dockClose" type="button" aria-label="Close player"><i class="ph ph-x"></i></button>
-</div>
+<!-- Newsletter nudge -->
+<aside class="nudge" id="nudge" hidden aria-label="Newsletter">
+  <button class="nudge__x" id="nudgeX" type="button" aria-label="Dismiss"><i class="ph ph-x"></i></button>
+  <p class="nudge__k"><i class="dot dot--coral" aria-hidden="true"></i>DON'T MISS FRIDAY 06:00 AM GMT</p>
+  <p class="nudge__t">Get research notes before the drop.</p>
+  <p class="nudge__s">Fridays 06:00 AM GMT episodes + 1 tool. No spam. Unsubscribe anytime.</p>
+  <a class="btn btn--ink btn--block" href="#subscribe" id="nudgeGo">JOIN THE LIST</a>
+</aside>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <audio id="audio" preload="none"></audio>
