@@ -10,7 +10,7 @@
   },
   // Contact form messages are saved here (see schema.sql).
   "d1_databases": [
-    { "binding": "DB", "database_name": "lovesciencetoday", "database_id": "94f32f57-5bf2-48c4-a396-5126d6c7fc4f" }
+    { "binding": "DB", "database_name": "lovesciencetoday", "database_id": "2ef20847-aa55-4610-acd9-b070f6ce2a1e" }
   ],
   // Public Turnstile site key. The secret key (TURNSTILE_SECRET) and RESEND_API_KEY are set as encrypted secrets, never here.
   "vars": { "TURNSTILE_SITEKEY": "0x4AAAAAAFRX1g58d0tByzxX" },
