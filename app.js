@@ -427,5 +427,5 @@
   })();
 
   // Klaviyo form fallback if the onsite script is blocked or slow
-  setTimeout(() => { const f = $('.klaviyo-form-XvXEqL'); if (f && !f.children.length) $('#subFallback').hidden = false; }, 8000);
+  setTimeout(() => { const f = $('.klaviyo-form-YkzHQU'); if (f && !f.children.length) $('#subFallback').hidden = false; }, 8000);
 })();

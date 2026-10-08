@@ -25,7 +25,7 @@ If both the snapshot and live feed are unavailable, the hero shows the Spotify e
 
 ## Email signup
 
-The form is Klaviyo (`<div class="klaviyo-form-XvXEqL">`) with the two Klaviyo scripts in `<head>`. Style and fields are managed in Klaviyo.
+The form is Klaviyo (`<div class="klaviyo-form-YkzHQU">`) with the two Klaviyo scripts in `<head>`. Style and fields are managed in Klaviyo.
 
 ## Lines from the show (new set every Friday)
 
