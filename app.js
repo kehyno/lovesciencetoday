@@ -97,6 +97,27 @@
     document.body.append(a); a.click(); a.remove(); toast('Added. Every Friday, 06:00 AM GMT.');
   });
 
+
+  /* ---------------- lines from the show ---------------- */
+  (() => {
+    const LINES = [
+      { line: 'Betrayal begins long before the first touch.', ep: 'Emotional Infidelity' },
+      { line: 'Resentment rarely arrives suddenly. It accumulates.', ep: 'The Resentment Trap' },
+      { line: 'Relationships rarely die from one wound.', ep: 'Relationship Autopsy' },
+      { line: 'Love cannot survive constant suspicion.', ep: 'The Trust Paradox' },
+    ];
+    const swap = $('#qSwap'), btn = $('#qNext'); let i = 0, spin = 0;
+    const show = () => {
+      const l = LINES[i];
+      $('#qText').textContent = `\u201C${l.line}\u201D`;
+      $('#qFrom').textContent = `From the episode ${l.ep}`;
+      $('#qCount').textContent = `${pad(i + 1)} / ${pad(LINES.length)}`;
+      if (!reduced) { swap.style.animation = 'none'; void swap.offsetWidth; swap.style.animation = ''; }
+    };
+    show();
+    btn.addEventListener('click', () => { i = (i + 1) % LINES.length; spin += 180; btn.style.setProperty('--spin', spin + 'deg'); show(); });
+  })();
+
   /* ---------------- newsletter nudge ---------------- */
   (() => {
     const nudge = $('#nudge'); let shown = false;
