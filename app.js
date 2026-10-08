@@ -98,9 +98,11 @@
   });
 
 
-  /* ---------------- lines from the show ---------------- */
+  /* ---------------- lines from the show: a fresh twelve every Friday ---------------- */
+  let refreshLines = () => {};
   (() => {
-    const LINES = [
+    // Hand-picked lines. New material comes from the episode descriptions in the feed (see sentencesFrom).
+    const CURATED = [
       { line: 'Betrayal begins long before the first touch.', ep: 'Emotional Infidelity' },
       { line: 'Resentment rarely arrives suddenly. It accumulates.', ep: 'The Resentment Trap' },
       { line: 'Relationships rarely die from one wound.', ep: 'Relationship Autopsy' },
@@ -108,22 +110,122 @@
       { line: 'A crumb can feel like a feast when you are starving.', ep: 'Breadcrumbing' },
       { line: 'Comparison turns a good relationship into a rehearsal for a better one.', ep: 'The Comparison Trap' },
       { line: 'High standards protect love. Ego protects fear.', ep: 'Standards vs Ego' },
-      { line: 'Availability is not about time. It is about capacity.', ep: 'Emotional Availability' },
       { line: 'Your last breakup was data. Read it before you repeat it.', ep: 'Relationship Autopsy' },
-      { line: 'Every resentment began as an expectation nobody said out loud.', ep: 'The Resentment Trap' },
       { line: 'We sabotage most what we want most.', ep: 'The Trust Paradox' },
       { line: 'The heart can leave long before the body does.', ep: 'Emotional Infidelity' },
     ];
-    const swap = $('#qSwap'), btn = $('#qNext'); let i = 0, spin = 0;
+    const PER_WEEK = 12;
+    const SKIP = /^(learn|join|listen|tune|in this|this episode|we |kehinde|click|subscribe|follow|get |discover|explore|today|welcome|dive|find out|stay|how |why |what |when |where |who )/i;
+    // A real sentence has a verb; this drops noun-phrase fragments such as "Attachment, nervous system regulation, and readiness."
+    const HAS_VERB = /\b(is|are|isn't|aren't|was|were|can|cannot|can't|will|won't|does|doesn't|do|don't|did|has|have|had|feel|feels|start|starts|started|begin|begins|began|leave|leaves|kill|kills|turn|turns|become|becomes|need|needs|want|wants|protect|protects|shape|shapes|distort|distorts)\b/i;
+    const swap = $('#qSwap'), btn = $('#qNext');
+    let i = 0, spin = 0, set = [], sig = '';
+
+    // Sentences from episode descriptions that read well on their own.
+    const sentencesFrom = eps => {
+      const out = [];
+      eps.forEach(e => {
+        const ep = (e.title || '').split(':')[0].trim();
+        (e.desc || '').replace(/\s+/g, ' ').split(/(?<=[.!?])\s+/).forEach(s => {
+          s = s.trim();
+          if (s.length < 28 || s.length > 110 || !/[.!?]$/.test(s)) return;
+          if (SKIP.test(s) || !HAS_VERB.test(s) || (s.match(/,/g) || []).length > 1 || /https?:|@|\d{3,}|\.\.\./.test(s)) return;
+          out.push({ line: s, ep });
+        });
+      });
+      return out;
+    };
+    // Seeded shuffle: same order for everyone, so every visitor sees the same twelve in a given week.
+    const shuffle = (arr, seed) => {
+      const a = arr.slice(); let t = seed >>> 0;
+      const rnd = () => { t += 0x6D2B79F5; let x = Math.imul(t ^ (t >>> 15), 1 | t); x ^= x + Math.imul(x ^ (x >>> 7), 61 | x); return ((x ^ (x >>> 14)) >>> 0) / 4294967296; };
+      for (let k = a.length - 1; k > 0; k--) { const r = Math.floor(rnd() * (k + 1)); [a[k], a[r]] = [a[r], a[k]]; }
+      return a;
+    };
+    // Week number counted from Friday 06:00 GMT drops.
+    const weekIndex = () => Math.floor((nextDrop().getTime() - 7 * 864e5) / (7 * 864e5));
+    const pick = eps => {
+      const seen = new Set();
+      const pool = CURATED.concat(sentencesFrom(eps)).filter(x => { const k = x.line.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; })
+        .sort((a, b) => a.line.localeCompare(b.line));
+      if (pool.length <= PER_WEEK) return pool;
+      const order = shuffle(pool, 0x4C53), start = (weekIndex() * PER_WEEK) % order.length;
+      return Array.from({ length: PER_WEEK }, (_, k) => order[(start + k) % order.length]);
+    };
     const show = () => {
-      const l = LINES[i];
+      const l = set[i];
       $('#qText').textContent = `\u201C${l.line}\u201D`;
       $('#qFrom').textContent = `From the episode ${l.ep}`;
-      $('#qCount').textContent = `${pad(i + 1)} / ${pad(LINES.length)}`;
+      $('#qCount').textContent = `${pad(i + 1)} / ${pad(set.length)}`;
       if (!reduced) { swap.style.animation = 'none'; void swap.offsetWidth; swap.style.animation = ''; }
     };
-    show();
-    btn.addEventListener('click', () => { i = (i + 1) % LINES.length; spin += 180; btn.style.setProperty('--spin', spin + 'deg'); show(); });
+    refreshLines = eps => {
+      const next = pick(eps || []), s = next.map(x => x.line).join('|');
+      if (s === sig) return;
+      sig = s; set = next; i = 0; show();
+    };
+    btn.addEventListener('click', () => { i = (i + 1) % set.length; spin += 180; btn.style.setProperty('--spin', spin + 'deg'); show(); });
+    refreshLines([]);
+  })();
+
+  /* ---------------- contact form ---------------- */
+  (() => {
+    const form = $('#cform'); if (!form) return;
+    const okBox = $('#cfOk'), err = $('#cfErr'), send = $('#cfSend'), cap = $('#cfCaptcha'), comments = $('#cfComments');
+    const local = ['localhost', '127.0.0.1'].includes(location.hostname);
+    const key = local ? '1x00000000000000000000AA' : (cap.dataset.sitekey || '');   // Cloudflare's always-pass test key, localhost only
+    const configured = key && !key.startsWith('YOUR_');
+    let widget = null, token = '';
+    const say = t => { err.textContent = t; err.hidden = !t; };
+    const fieldErr = (id, t) => { const input = $('#' + id), p = $('#' + id + 'Err'); input.setAttribute('aria-invalid', t ? 'true' : 'false'); p.textContent = t || ''; p.hidden = !t; };
+
+    comments.addEventListener('input', () => { $('#cfCount').textContent = `${comments.value.length} / 2000`; });
+
+    if (!configured) {
+      send.disabled = true;
+      say('The captcha is not set up yet, so this form is switched off. Email us at lovesciencetoday@gmail.com or mail@lovesciencetoday.com instead.');
+    } else {
+      const render = () => {
+        if (!window.turnstile || widget !== null) return;
+        widget = window.turnstile.render(cap, { sitekey: key, theme: 'light',
+          callback: t => { token = t; },
+          'expired-callback': () => { token = ''; },
+          'error-callback': () => { token = ''; say('The captcha could not load. Check your connection and try again.'); } });
+      };
+      // load Turnstile only when the form is about to be seen
+      new IntersectionObserver((es, o) => {
+        if (!es[0].isIntersecting) return; o.disconnect();
+        const s = Object.assign(document.createElement('script'), { src: 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit', async: true, defer: true });
+        document.head.append(s);
+        const t = setInterval(() => { render(); if (widget !== null) clearInterval(t); }, 250); setTimeout(() => clearInterval(t), 20000);
+      }, { rootMargin: '400px' }).observe(form);
+    }
+    const resetCaptcha = () => { token = ''; if (window.turnstile && widget !== null) window.turnstile.reset(widget); };
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault(); say('');
+      const v = { name: $('#cfName').value.trim(), email: $('#cfEmail').value.trim(), comments: comments.value.trim(), website: $('#cfWeb').value };
+      const bad = {};
+      if (v.name.length < 2) bad.cfName = 'Please enter your name.';
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.email)) bad.cfEmail = 'Please enter a valid email address.';
+      if (v.comments.length < 10) bad.cfComments = 'Please write at least a sentence.';
+      ['cfName', 'cfEmail', 'cfComments'].forEach(id => fieldErr(id, bad[id]));
+      const first = Object.keys(bad)[0];
+      if (first) { $('#' + first).focus(); return; }
+      if (!token) { say('Please complete the captcha before sending.'); return; }
+
+      send.disabled = true; send.textContent = 'SENDING...';
+      try {
+        const r = await fetch('/api/contact', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ...v, token }) });
+        const j = await r.json().catch(() => ({}));
+        if (r.ok && j.ok) { form.hidden = true; okBox.hidden = false; okBox.querySelector('h3').focus?.(); form.reset(); $('#cfCount').textContent = '0 / 2000'; }
+        else if (r.status === 422 && j.fields) { Object.entries({ cfName: j.fields.name, cfEmail: j.fields.email, cfComments: j.fields.comments }).forEach(([id, t]) => fieldErr(id, t)); }
+        else if (r.status === 403) say('The captcha check failed. Please tick the box again and resend.');
+        else say('We could not send your message right now. Please email lovesciencetoday@gmail.com instead.');
+      } catch { say('We could not reach the server. Check your connection, or email lovesciencetoday@gmail.com instead.'); }
+      send.disabled = false; send.textContent = 'SEND MESSAGE'; resetCaptcha();
+    });
+    $('#cfAgain').addEventListener('click', () => { okBox.hidden = true; form.hidden = false; $('#cfName').focus(); });
   })();
 
   /* ---------------- newsletter nudge ---------------- */
@@ -282,7 +384,7 @@
   function apply(list, announce) {
     const prev = episodes[0] && episodes[0].id;
     episodes = list;
-    renderGrid(); observeReveals();
+    renderGrid(); observeReveals(); refreshLines(list);
     if (!current || (current.id !== list[0].id && !audio.currentTime)) setHero(list[0]);
     if (announce && prev && prev !== list[0].id) toast(`New episode: ${list[0].title}`);
   }

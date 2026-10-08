@@ -26,3 +26,20 @@ If both the snapshot and live feed are unavailable, the hero shows the Spotify e
 ## Email signup
 
 The form is Klaviyo (`<div class="klaviyo-form-XvXEqL">`) with the two Klaviyo scripts in `<head>`. Style and fields are managed in Klaviyo.
+
+## Lines from the show (new set every Friday)
+
+`app.js` keeps a pool of hand-picked lines (`CURATED`) and adds sentences taken from the episode descriptions in the feed. Each Friday 06:00 GMT the page switches to the next window of 12, shuffled with a fixed seed so every visitor sees the same twelve in a given week and nothing repeats until the pool is used up. Add your own favourite lines to `CURATED` at any time; the more episodes the feed holds, the bigger the pool.
+
+## Contact form (name, email, comments)
+
+The form posts to `functions/api/contact.js`, a Cloudflare Pages Function. It checks a Turnstile captcha, then emails the message to `kehyno@gmail.com` through Resend. The address never appears in the page. A hidden honeypot field also catches simple bots. It only works when the site is deployed on Cloudflare Pages (connect the repo, no build command, output directory `/`).
+
+One-time setup:
+
+1. **Turnstile**: Cloudflare dashboard > Turnstile > Add site for your domain. Put the **site key** in `index.html` (`data-sitekey` on `#cfCaptcha`, replacing `YOUR_TURNSTILE_SITE_KEY`). Until you do, the form shows a "captcha not set up" message and stays switched off.
+2. **Pages variables** (Settings > Variables and Secrets, add as encrypted secrets): `TURNSTILE_SECRET` (the Turnstile **secret key**) and `RESEND_API_KEY`.
+3. **Resend**: create a free account at resend.com using `kehyno@gmail.com` and copy an API key. With no domain verified, Resend only delivers to the account's own address, which is exactly what is needed here. To send from your own domain later, verify it in Resend and set `CONTACT_FROM`.
+4. Optional: set `CONTACT_TO` to send to a different inbox.
+
+Test the function logic offline with `node scripts/test-contact.mjs`. On localhost the form uses Cloudflare's always-pass test captcha key.
