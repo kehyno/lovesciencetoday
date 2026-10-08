@@ -1,0 +1,36 @@
+name: Update episodes
+
+# Fridays 06:00 GMT (the drop), then retries at 06:15, 06:45 and 08:00 in case the
+# feed is slow to publish. Also runs on demand from the Actions tab.
+on:
+  schedule:
+    - cron: '0 6 * * 5'
+    - cron: '15 6 * * 5'
+    - cron: '45 6 * * 5'
+    - cron: '0 8 * * 5'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/fetch-feed.mjs
+      - name: Commit if the episode list changed
+        run: |
+          # "updated" changes on every run, so compare the episode list only
+          if git diff --quiet -I'"updated"' -- episodes.json; then
+            echo "No new episodes."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add episodes.json
+            git commit -m "Update episodes from RSS feed"
+            git push
+          fi
