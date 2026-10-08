@@ -268,8 +268,7 @@
         ${ep.audio ? `<audio class="ep__audio" controls preload="none" src="${esc(ep.audio)}"></audio>` : `<div class="ep__audio">Audio updating Friday 06:00 AM GMT</div>`}
         <div class="ep__btns">
           ${ep.audio ? `<button class="btn btn--ink" type="button" data-listen="${esc(ep.id)}">LISTEN</button>` : ''}
-          <a class="btn btn--line" href="${esc(PLATFORMS[0].url)}" target="_blank" rel="noopener">SPOTIFY</a>
-          <a class="btn btn--line" href="${esc(PLATFORMS[6].url)}" target="_blank" rel="noopener">CASTBOX</a>
+          ${[['SPOTIFY', 0], ['APPLE', 1], ['AMAZON', 2], ['YOUTUBE', 3]].map(([n, k]) => `<a class="btn btn--line" href="${esc(PLATFORMS[k].url)}" target="_blank" rel="noopener" aria-label="Listen on ${esc(PLATFORMS[k].name)}">${n}</a>`).join('\n          ')}
         </div>
       </article>`).join('');
     emptyEl.hidden = all.length > 0;
