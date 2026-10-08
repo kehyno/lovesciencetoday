@@ -1,0 +1,14 @@
+# Files that are not part of the public website
+functions
+scripts
+src
+.github
+.git
+node_modules
+.wrangler
+schema.sql
+README.md
+wrangler.jsonc
+.assetsignore
+.gitignore
+.nojekyll

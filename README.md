@@ -31,17 +31,20 @@ The form is Klaviyo (`<div class="klaviyo-form-XvXEqL">`) with the two Klaviyo s
 
 `app.js` keeps a pool of hand-picked lines (`CURATED`) and adds sentences taken from the episode descriptions in the feed. Each Friday 06:00 GMT the page switches to the next window of 12, shuffled with a fixed seed so every visitor sees the same twelve in a given week and nothing repeats until the pool is used up. Add your own favourite lines to `CURATED` at any time; the more episodes the feed holds, the bigger the pool.
 
+## Deploying on Cloudflare (Workers Builds or Pages)
+
+`wrangler.jsonc` makes the repo deploy as a Cloudflare Worker with static assets (what **Workers Builds** runs: `npx wrangler deploy`). The site is served from the repo root, `.assetsignore` keeps private files (source, scripts, README) off the public site, and `src/worker.js` handles `/api/*`. The same code also works on Cloudflare Pages through `functions/`.
+
 ## Contact form (name, email, comments)
 
-The form posts to `functions/api/contact.js`, a Cloudflare Pages Function. It checks a Turnstile captcha, then **saves the message to a free Cloudflare D1 database** (`lovesciencetoday`, table `contact_messages`, see `schema.sql`) and, if you add a Resend key, also emails it to `kehyno@gmail.com`. A hidden honeypot field catches simple bots. It only works when the site is deployed on Cloudflare Pages (connect the repo, no build command, output directory `/`).
+The form posts to `/api/contact`. It checks a Turnstile captcha, then **saves the message to a free Cloudflare D1 database** (`lovesciencetoday`, table `contact_messages`, see `schema.sql`) and, if you add a Resend key, also emails it to `kehyno@gmail.com`. A hidden honeypot field catches simple bots.
 
-One-time setup in Cloudflare Pages > your project > Settings:
+What is already configured in `wrangler.jsonc`: the D1 binding `DB` and the public Turnstile site key (`TURNSTILE_SITEKEY`). What you add in the Cloudflare dashboard (Settings > Variables and Secrets, as **secrets**):
 
-1. **Database binding**: Bindings > Add > D1 database, variable name `DB`, database `lovesciencetoday`. (The database and table already exist.)
-2. **Captcha**: Cloudflare dashboard > Turnstile > Add widget for your domain. Add the **site key** as a Pages variable named `TURNSTILE_SITEKEY` (no code edit needed; the form reads it from `/api/config`) and add the **secret key** under Variables and Secrets as an encrypted secret named `TURNSTILE_SECRET`. Until the site key is set, the form shows "captcha not set up" and stays off.
-3. **Email copy (optional)**: create a free account at resend.com with `kehyno@gmail.com`, add the API key as an encrypted secret named `RESEND_API_KEY`. Optional `CONTACT_TO` and `CONTACT_FROM` override the recipient and sender.
+1. `TURNSTILE_SECRET`: the Turnstile secret key (create the widget at Cloudflare > Turnstile, with this site's hostnames).
+2. Optional `RESEND_API_KEY`: key from resend.com (sign up with `kehyno@gmail.com`) to also get each message by email. `CONTACT_TO` and `CONTACT_FROM` override the recipient and sender.
 
 Read submissions: Cloudflare dashboard > Storage & Databases > D1 > lovesciencetoday > Console, then run
 `SELECT created_at, name, email, comments FROM contact_messages ORDER BY id DESC LIMIT 20;`
 
-Test the function logic offline with `node scripts/test-contact.mjs`. On localhost the form uses Cloudflare's always-pass test captcha key.
+Offline tests: `node scripts/test-contact.mjs` and `node scripts/test-worker.mjs`. On localhost the form uses Cloudflare's always-pass test captcha key.

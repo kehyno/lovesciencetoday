@@ -1,0 +1,19 @@
+{
+  "name": "lovesciencetoday",
+  "main": "src/worker.js",
+  "compatibility_date": "2025-09-01",
+  // Serve the site root as static assets; only /api/* goes through the Worker.
+  "assets": {
+    "directory": "./",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+  // Contact form messages are saved here (see schema.sql).
+  "d1_databases": [
+    { "binding": "DB", "database_name": "lovesciencetoday", "database_id": "94f32f57-5bf2-48c4-a396-5126d6c7fc4f" }
+  ],
+  // Public Turnstile site key. The secret key (TURNSTILE_SECRET) and RESEND_API_KEY are set as encrypted secrets, never here.
+  "vars": { "TURNSTILE_SITEKEY": "0x4AAAAAAFRX1g58d0tByzxX" },
+  // Keep any other variables you add in the Cloudflare dashboard when deploying.
+  "keep_vars": true
+}
