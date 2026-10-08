@@ -1,12 +1,14 @@
 // Cloudflare Pages Function: POST /api/contact
-// Verifies a Turnstile captcha, then emails the message to the show's inbox via Resend.
+// Verifies a Turnstile captcha, saves the message to a Cloudflare D1 database (free tier),
+// and optionally also emails it to the show's inbox via Resend.
 //
-// Environment variables (Cloudflare Pages > Settings > Variables and Secrets):
-//   TURNSTILE_SECRET   required  Turnstile secret key (encrypt it)
-//   RESEND_API_KEY     required  Resend API key (encrypt it)
-//   CONTACT_TO         optional  recipient, defaults to kehyno@gmail.com
-//   CONTACT_FROM       optional  sender, defaults to Resend's shared test sender
-//                                "Love Science Today <onboarding@resend.dev>"
+// Cloudflare Pages > Settings:
+//   Bindings > D1 database       variable name DB  ->  database "lovesciencetoday"   (see schema.sql)
+//   Variables and Secrets:
+//     TURNSTILE_SECRET   required  Turnstile secret key (encrypt it)
+//     RESEND_API_KEY     optional  Resend API key (encrypt it); enables the email copy
+//     CONTACT_TO         optional  email recipient, defaults to kehyno@gmail.com
+//     CONTACT_FROM       optional  email sender, defaults to "Love Science Today <onboarding@resend.dev>"
 
 const DEFAULT_TO = 'kehyno@gmail.com';
 const DEFAULT_FROM = 'Love Science Today <onboarding@resend.dev>';
@@ -40,21 +42,12 @@ async function verifyTurnstile(token, secret, ip) {
   return j.success === true;
 }
 
-export async function onRequestPost({ request, env }) {
-  if (!env.TURNSTILE_SECRET || !env.RESEND_API_KEY) return json({ ok: false, error: 'not_configured' }, 500);
+async function saveToDb(db, { name, email, comments }, request) {
+  await db.prepare('INSERT INTO contact_messages (name, email, comments, ip, user_agent) VALUES (?1, ?2, ?3, ?4, ?5)')
+    .bind(name, email, comments, request.headers.get('CF-Connecting-IP') || '', oneLine(request.headers.get('User-Agent'), 200)).run();
+}
 
-  let input;
-  try { input = await request.json(); } catch { return json({ ok: false, error: 'bad_request' }, 400); }
-
-  // Honeypot: real visitors never see or fill this field. Pretend success so bots learn nothing.
-  if (input.website) return json({ ok: true });
-
-  const { name, email, comments, errors } = validate(input);
-  if (Object.keys(errors).length) return json({ ok: false, error: 'invalid', fields: errors }, 422);
-
-  const human = await verifyTurnstile(input.token, env.TURNSTILE_SECRET, request.headers.get('CF-Connecting-IP'));
-  if (!human) return json({ ok: false, error: 'captcha' }, 403);
-
+async function sendEmail(env, { name, email, comments }) {
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, 'content-type': 'application/json' },
@@ -66,7 +59,30 @@ export async function onRequestPost({ request, env }) {
       text: `Name: ${name}\nEmail: ${email}\n\nComments:\n${comments}\n\n--\nSent from the Love Science Today contact form.`,
     }),
   });
-  if (!res.ok) return json({ ok: false, error: 'send_failed' }, 502);
+  if (!res.ok) throw new Error('email failed');
+}
+
+export async function onRequestPost({ request, env }) {
+  // Needs the captcha secret, plus at least one place to put the message.
+  if (!env.TURNSTILE_SECRET || !(env.DB || env.RESEND_API_KEY)) return json({ ok: false, error: 'not_configured' }, 500);
+
+  let input;
+  try { input = await request.json(); } catch { return json({ ok: false, error: 'bad_request' }, 400); }
+
+  // Honeypot: real visitors never see or fill this field. Pretend success so bots learn nothing.
+  if (input.website) return json({ ok: true });
+
+  const data = validate(input);
+  if (Object.keys(data.errors).length) return json({ ok: false, error: 'invalid', fields: data.errors }, 422);
+
+  const human = await verifyTurnstile(input.token, env.TURNSTILE_SECRET, request.headers.get('CF-Connecting-IP'));
+  if (!human) return json({ ok: false, error: 'captcha' }, 403);
+
+  // The database copy is the source of truth; the email is a notification on top of it.
+  let saved = false, emailed = false;
+  if (env.DB) { try { await saveToDb(env.DB, data, request); saved = true; } catch { /* reported below if nothing else worked */ } }
+  if (env.RESEND_API_KEY) { try { await sendEmail(env, data); emailed = true; } catch { /* ditto */ } }
+  if (!saved && !emailed) return json({ ok: false, error: 'send_failed' }, 502);
   return json({ ok: true });
 }
 

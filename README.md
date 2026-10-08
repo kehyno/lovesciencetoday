@@ -33,13 +33,15 @@ The form is Klaviyo (`<div class="klaviyo-form-XvXEqL">`) with the two Klaviyo s
 
 ## Contact form (name, email, comments)
 
-The form posts to `functions/api/contact.js`, a Cloudflare Pages Function. It checks a Turnstile captcha, then emails the message to `kehyno@gmail.com` through Resend. The address never appears in the page. A hidden honeypot field also catches simple bots. It only works when the site is deployed on Cloudflare Pages (connect the repo, no build command, output directory `/`).
+The form posts to `functions/api/contact.js`, a Cloudflare Pages Function. It checks a Turnstile captcha, then **saves the message to a free Cloudflare D1 database** (`lovesciencetoday`, table `contact_messages`, see `schema.sql`) and, if you add a Resend key, also emails it to `kehyno@gmail.com`. A hidden honeypot field catches simple bots. It only works when the site is deployed on Cloudflare Pages (connect the repo, no build command, output directory `/`).
 
-One-time setup:
+One-time setup in Cloudflare Pages > your project > Settings:
 
-1. **Turnstile**: Cloudflare dashboard > Turnstile > Add site for your domain. Put the **site key** in `index.html` (`data-sitekey` on `#cfCaptcha`, replacing `YOUR_TURNSTILE_SITE_KEY`). Until you do, the form shows a "captcha not set up" message and stays switched off.
-2. **Pages variables** (Settings > Variables and Secrets, add as encrypted secrets): `TURNSTILE_SECRET` (the Turnstile **secret key**) and `RESEND_API_KEY`.
-3. **Resend**: create a free account at resend.com using `kehyno@gmail.com` and copy an API key. With no domain verified, Resend only delivers to the account's own address, which is exactly what is needed here. To send from your own domain later, verify it in Resend and set `CONTACT_FROM`.
-4. Optional: set `CONTACT_TO` to send to a different inbox.
+1. **Database binding**: Bindings > Add > D1 database, variable name `DB`, database `lovesciencetoday`. (The database and table already exist.)
+2. **Captcha**: Cloudflare dashboard > Turnstile > Add widget for your domain. Put the **site key** in `index.html` (`data-sitekey` on `#cfCaptcha`, replacing `YOUR_TURNSTILE_SITE_KEY`) and add the **secret key** under Variables and Secrets as an encrypted secret named `TURNSTILE_SECRET`. Until the site key is set, the form shows "captcha not set up" and stays off.
+3. **Email copy (optional)**: create a free account at resend.com with `kehyno@gmail.com`, add the API key as an encrypted secret named `RESEND_API_KEY`. Optional `CONTACT_TO` and `CONTACT_FROM` override the recipient and sender.
+
+Read submissions: Cloudflare dashboard > Storage & Databases > D1 > lovesciencetoday > Console, then run
+`SELECT created_at, name, email, comments FROM contact_messages ORDER BY id DESC LIMIT 20;`
 
 Test the function logic offline with `node scripts/test-contact.mjs`. On localhost the form uses Cloudflare's always-pass test captcha key.
