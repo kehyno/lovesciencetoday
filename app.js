@@ -158,7 +158,29 @@
       $('#qFrom').textContent = `From the episode ${l.ep}`;
       $('#qCount').textContent = `${pad(i + 1)} / ${pad(set.length)}`;
       if (!reduced) { swap.style.animation = 'none'; void swap.offsetWidth; swap.style.animation = ''; }
+      schedule();
     };
+    // Auto-advance every 10 seconds. Pauses on hover or keyboard focus, when the section is off screen, and when the tab is hidden.
+    // Not used when the visitor prefers reduced motion; the button still works.
+    const EVERY = 10000, bar = $('#qBar').parentElement, stage = $('#qStage');
+    let timer = 0, held = false, onScreen = false;
+    const canRun = () => !reduced && !held && onScreen && !document.hidden && set.length > 1;
+    function schedule() {
+      clearTimeout(timer);
+      bar.classList.remove('run'); void bar.offsetWidth;
+      if (!canRun()) return;
+      bar.classList.add('run');
+      timer = setTimeout(() => { i = (i + 1) % set.length; show(); }, EVERY);
+    }
+    const hold = v => { held = v; bar.classList.toggle('hold', v); if (v) clearTimeout(timer); else schedule(); };
+    [stage, btn].forEach(el => {
+      el.addEventListener('pointerenter', () => hold(true)); el.addEventListener('pointerleave', () => hold(false));
+      el.addEventListener('focusin', () => hold(true)); el.addEventListener('focusout', () => hold(false));
+    });
+    document.addEventListener('visibilitychange', schedule);
+    new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; schedule(); }, { threshold: .25 }).observe($('#lines'));
+    if (reduced) $('#qNote').textContent = '12 new lines every Friday 06:00 AM GMT. Press the button for another line.';
+    else $('#qNote').textContent = 'A new line every 10 seconds, and 12 new lines every Friday 06:00 AM GMT. Hover to pause.';
     refreshLines = eps => {
       const next = pick(eps || []), s = next.map(x => x.line).join('|');
       if (s === sig) return;
