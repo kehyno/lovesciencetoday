@@ -239,6 +239,11 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
 .quotes__text{margin:0;font:italic 400 clamp(2rem,4.6vw,3.6rem)/1.1 var(--serif);letter-spacing:-.02em;text-wrap:balance;padding-bottom:.08em}
 .quotes__from{margin-top:1.1rem;color:rgb(253 248 242 / .62);font-size:.9375rem}
 @keyframes quoteIn{from{opacity:0;transform:translateY(16px);filter:blur(10px)}to{opacity:1;transform:none;filter:none}}
+.quotes__bar{width:min(12rem,60%);height:2px;margin:1.25rem auto 0;border-radius:2px;background:rgb(253 248 242 / .14);overflow:hidden}
+.quotes__bar i{display:block;height:100%;background:var(--gold);transform-origin:0 50%;transform:scaleX(0)}
+.quotes__bar.run i{animation:qbar 10s linear forwards}
+.quotes__bar.hold i{animation-play-state:paused}
+@keyframes qbar{to{transform:scaleX(1)}}
 .quotes__note{margin-top:1.1rem;font-size:.75rem;color:rgb(253 248 242 / .6);letter-spacing:.04em}
 .btn--glass{height:3rem;min-height:3rem;padding:0 1.5rem;font-size:.8125rem;letter-spacing:.06em;color:var(--cream);border:1px solid rgb(255 200 107 / .3);background:rgb(255 255 255 / .06);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
 .btn--glass:hover{background:var(--gold);color:var(--navy);border-color:var(--gold)}
@@ -385,4 +390,5 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
   [data-rise],.hw,.reveal{opacity:1!important;transform:none!important;filter:none!important}
   .marquee__track{animation:none}
   .quotes__rays{animation:none;opacity:.4}
+  .quotes__bar{display:none}
 }

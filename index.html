@@ -194,14 +194,15 @@
   <div class="wrap quotes__in">
     <h2 id="q-h" class="sr">Lines from the show</h2>
     <p class="quotes__top reveal"><span>03 &middot; Lines from the show</span><span class="quotes__count" id="qCount">01 / 12</span></p>
-    <div class="quotes__stage reveal" aria-live="polite">
+    <div class="quotes__stage reveal" id="qStage">
       <figure class="quotes__swap" id="qSwap">
         <blockquote class="quotes__text" id="qText"></blockquote>
         <figcaption class="quotes__from" id="qFrom"></figcaption>
       </figure>
     </div>
     <button class="btn btn--glass reveal" type="button" id="qNext" data-magnetic><i class="ph ph-shuffle" aria-hidden="true"></i>Another line</button>
-    <p class="quotes__note reveal">12 new lines every Friday 06:00 AM GMT</p>
+    <div class="quotes__bar" aria-hidden="true"><i id="qBar"></i></div>
+    <p class="quotes__note reveal" id="qNote">12 new lines every Friday 06:00 AM GMT</p>
   </div>
 </section>
 
