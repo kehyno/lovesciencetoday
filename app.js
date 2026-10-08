@@ -105,6 +105,14 @@
       { line: 'Resentment rarely arrives suddenly. It accumulates.', ep: 'The Resentment Trap' },
       { line: 'Relationships rarely die from one wound.', ep: 'Relationship Autopsy' },
       { line: 'Love cannot survive constant suspicion.', ep: 'The Trust Paradox' },
+      { line: 'A crumb can feel like a feast when you are starving.', ep: 'Breadcrumbing' },
+      { line: 'Comparison turns a good relationship into a rehearsal for a better one.', ep: 'The Comparison Trap' },
+      { line: 'High standards protect love. Ego protects fear.', ep: 'Standards vs Ego' },
+      { line: 'Availability is not about time. It is about capacity.', ep: 'Emotional Availability' },
+      { line: 'Your last breakup was data. Read it before you repeat it.', ep: 'Relationship Autopsy' },
+      { line: 'Every resentment began as an expectation nobody said out loud.', ep: 'The Resentment Trap' },
+      { line: 'We sabotage most what we want most.', ep: 'The Trust Paradox' },
+      { line: 'The heart can leave long before the body does.', ep: 'Emotional Infidelity' },
     ];
     const swap = $('#qSwap'), btn = $('#qNext'); let i = 0, spin = 0;
     const show = () => {
