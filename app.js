@@ -173,18 +173,18 @@
     const form = $('#cform'); if (!form) return;
     const okBox = $('#cfOk'), err = $('#cfErr'), send = $('#cfSend'), cap = $('#cfCaptcha'), comments = $('#cfComments');
     const local = ['localhost', '127.0.0.1'].includes(location.hostname);
-    const key = local ? '1x00000000000000000000AA' : (cap.dataset.sitekey || '');   // Cloudflare's always-pass test key, localhost only
-    const configured = key && !key.startsWith('YOUR_');
+    // Site key: the localhost test key, else data-sitekey in the HTML, else TURNSTILE_SITEKEY from /api/config.
+    let key = local ? '1x00000000000000000000AA' : (cap.dataset.sitekey || '');   // Cloudflare's always-pass test key, localhost only
+    const isSet = k => !!k && !k.startsWith('YOUR_');
     let widget = null, token = '';
     const say = t => { err.textContent = t; err.hidden = !t; };
     const fieldErr = (id, t) => { const input = $('#' + id), p = $('#' + id + 'Err'); input.setAttribute('aria-invalid', t ? 'true' : 'false'); p.textContent = t || ''; p.hidden = !t; };
 
     comments.addEventListener('input', () => { $('#cfCount').textContent = `${comments.value.length} / 2000`; });
 
-    if (!configured) {
-      send.disabled = true;
-      say('The captcha is not set up yet, so this form is switched off. Email us at lovesciencetoday@gmail.com or mail@lovesciencetoday.com instead.');
-    } else {
+    const off = () => { send.disabled = true; say('The captcha is not set up yet, so this form is switched off. Email us at lovesciencetoday@gmail.com or mail@lovesciencetoday.com instead.'); };
+    const start = () => {
+      send.disabled = false; say('');
       const render = () => {
         if (!window.turnstile || widget !== null) return;
         widget = window.turnstile.render(cap, { sitekey: key, theme: 'light',
@@ -192,14 +192,21 @@
           'expired-callback': () => { token = ''; },
           'error-callback': () => { token = ''; say('The captcha could not load. Check your connection and try again.'); } });
       };
-      // load Turnstile only when the form is about to be seen
-      new IntersectionObserver((es, o) => {
-        if (!es[0].isIntersecting) return; o.disconnect();
-        const s = Object.assign(document.createElement('script'), { src: 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit', async: true, defer: true });
-        document.head.append(s);
-        const t = setInterval(() => { render(); if (widget !== null) clearInterval(t); }, 250); setTimeout(() => clearInterval(t), 20000);
-      }, { rootMargin: '400px' }).observe(form);
-    }
+      const s = Object.assign(document.createElement('script'), { src: 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit', async: true, defer: true });
+      document.head.append(s);
+      const t = setInterval(() => { render(); if (widget !== null) clearInterval(t); }, 250); setTimeout(() => clearInterval(t), 20000);
+    };
+    // Resolve the key, then load Turnstile only when the form is about to be seen.
+    const resolveKey = async () => {
+      if (isSet(key)) return key;
+      try { const r = await fetch('/api/config', { cache: 'no-store' }); const j = await r.json(); return isSet(j.sitekey) ? j.sitekey : ''; } catch { return ''; }
+    };
+    send.disabled = true;
+    new IntersectionObserver(async (es, o) => {
+      if (!es[0].isIntersecting) return; o.disconnect();
+      key = await resolveKey();
+      isSet(key) ? start() : off();
+    }, { rootMargin: '400px' }).observe(form);
     const resetCaptcha = () => { token = ''; if (window.turnstile && widget !== null) window.turnstile.reset(widget); };
 
     form.addEventListener('submit', async e => {

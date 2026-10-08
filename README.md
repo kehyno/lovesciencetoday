@@ -38,7 +38,7 @@ The form posts to `functions/api/contact.js`, a Cloudflare Pages Function. It ch
 One-time setup in Cloudflare Pages > your project > Settings:
 
 1. **Database binding**: Bindings > Add > D1 database, variable name `DB`, database `lovesciencetoday`. (The database and table already exist.)
-2. **Captcha**: Cloudflare dashboard > Turnstile > Add widget for your domain. Put the **site key** in `index.html` (`data-sitekey` on `#cfCaptcha`, replacing `YOUR_TURNSTILE_SITE_KEY`) and add the **secret key** under Variables and Secrets as an encrypted secret named `TURNSTILE_SECRET`. Until the site key is set, the form shows "captcha not set up" and stays off.
+2. **Captcha**: Cloudflare dashboard > Turnstile > Add widget for your domain. Add the **site key** as a Pages variable named `TURNSTILE_SITEKEY` (no code edit needed; the form reads it from `/api/config`) and add the **secret key** under Variables and Secrets as an encrypted secret named `TURNSTILE_SECRET`. Until the site key is set, the form shows "captcha not set up" and stays off.
 3. **Email copy (optional)**: create a free account at resend.com with `kehyno@gmail.com`, add the API key as an encrypted secret named `RESEND_API_KEY`. Optional `CONTACT_TO` and `CONTACT_FROM` override the recipient and sender.
 
 Read submissions: Cloudflare dashboard > Storage & Databases > D1 > lovesciencetoday > Console, then run
