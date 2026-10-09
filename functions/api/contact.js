@@ -42,7 +42,15 @@ async function verifyTurnstile(token, secret, ip) {
   return j.success === true;
 }
 
+// Mirrors schema.sql; lets the form work even if the table was never created by hand.
+const CREATE_TABLE = `CREATE TABLE IF NOT EXISTS contact_messages (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  name TEXT NOT NULL, email TEXT NOT NULL, comments TEXT NOT NULL,
+  ip TEXT, user_agent TEXT, emailed INTEGER NOT NULL DEFAULT 0)`.replace(/\s+/g, ' ');
+
 async function saveToDb(db, { name, email, comments }, request) {
+  await db.prepare(CREATE_TABLE).run();
   await db.prepare('INSERT INTO contact_messages (name, email, comments, ip, user_agent) VALUES (?1, ?2, ?3, ?4, ?5)')
     .bind(name, email, comments, request.headers.get('CF-Connecting-IP') || '', oneLine(request.headers.get('User-Agent'), 200)).run();
 }
