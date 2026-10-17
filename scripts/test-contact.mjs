@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { onRequest, validate } from '../functions/api/contact.js';
 
 const rows = [];
-const DB = { prepare: () => ({ bind: (...a) => ({ run: async () => { rows.push(a); } }) }) };
+const DB = { prepare: () => ({ run: async () => {}, bind: (...a) => ({ run: async () => { rows.push(a); } }) }) };
 const env = { TURNSTILE_SECRET: 's', RESEND_API_KEY: 'r', DB };
 let sent = null, turnstileOk = true;
 globalThis.fetch = async (url, init) => {
@@ -31,7 +31,7 @@ assert.equal(r.status, 200); assert.equal(rows.length, 1); assert.deepEqual(rows
 r = await onRequest({ request: new Request('https://x.test/api/contact', { method: 'POST', body: JSON.stringify(good) }), env: { TURNSTILE_SECRET: 's', RESEND_API_KEY: 'r' } });
 assert.equal(r.status, 200); assert.ok(sent);
 // database failure with no email -> clear error, not a false success
-const badDB = { prepare: () => ({ bind: () => ({ run: async () => { throw new Error('boom'); } }) }) };
+const badDB = { prepare: () => ({ run: async () => {}, bind: () => ({ run: async () => { throw new Error('boom'); } }) }) };
 r = await onRequest({ request: new Request('https://x.test/api/contact', { method: 'POST', body: JSON.stringify(good) }), env: { TURNSTILE_SECRET: 's', DB: badDB } });
 assert.equal(r.status, 502);
 console.log('contact function: all checks passed');
